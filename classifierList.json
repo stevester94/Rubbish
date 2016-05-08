@@ -12,9 +12,9 @@
         "classifier_id": "cans_1537010562",
         "created": "2016-05-08T14:33:24.000Z",
         "owner": "78da62a8-c1cb-48a6-8d5c-b6c80b2c9b3c-us-south" },
-      { "name": "computer",
-      "classifier_id": "computer_1768678253",
-      "created": "2016-05-08T14:32:40.000Z",
-      "owner": "78da62a8-c1cb-48a6-8d5c-b6c80b2c9b3c-us-south" }
+        { "name": "computer",
+        "classifier_id": "computer_1768678253",
+        "created": "2016-05-08T14:32:40.000Z",
+        "owner": "78da62a8-c1cb-48a6-8d5c-b6c80b2c9b3c-us-south" }
 ]
 }
