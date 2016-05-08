@@ -53,10 +53,11 @@ var classifiedStatus = {
   watResClass: "unwritten",
   watResConfid: -100.100
 };
+//
 
 // createCokeClassifier();
 
-function classifyCoke() {
+function classifyCoke(functToRun) {
   var params = {
 
   	images_file: fs.createReadStream('./test3.jpg'),
@@ -76,13 +77,19 @@ function classifyCoke() {
 
           }
           else{
-     		    //console.log(JSON.stringify(response, null, 2));
-            var watsonText = JSON.stringify(response, null, 2);
-            var watsonConfidence = (watsonText.images.scores.score).substring(0, 8);
+     		   //  console.log(JSON.stringify(response, null, 2));
+            var watsonText = (JSON.stringify(response, null, 2));
+            watsonText = JSON.parse(watsonText);
+            console.log("==========");
+            console.log(watsonText.images[0].scores[0].name);
+            console.log("=====");
+            var watsonConfidence = watsonText.images[0].scores[0].score;
+             console.log(watsonConfidence);
+
             classifiedStatus = {
               classified: "Yes",
-              watResClass :  watsonText.images.scores.name,
-              watResConfid : parsefloat(watsonConfidence)
+              watResClass :  watsonText.images[0].scores[0].name,
+              watResConfid : (watsonConfidence)
             };
           }
 
@@ -90,8 +97,12 @@ function classifyCoke() {
 
 
   });
-
+//  dumpster();
+  functToRun();
 }
+//classifyCoke();
+//console.log(classifiedStatus.classified);
+
 /*
 function testObject(){
   var classifiedStatus = {
@@ -102,7 +113,7 @@ function testObject(){
 }
 */
  //createTrashTier();
- function trashTier(){
+ var dumpster = function trashTier(){
 
    var watsonResult = {
      classifiedVal: "No Clue",
@@ -110,18 +121,18 @@ function testObject(){
      watsonResponseConfidence : -7.7
 
    };
-   classifyCoke();
-   //watsonResult.classifiedVal = classified;
 
+   //watsonResult.classifiedVal = classified;
+   //functToRun();
    watsonSays = watsonResult.classifiedVal;
-   console.log(classifiedStatus.classified + '/n' +
-    classifiedStatus.watResClass + '/n' +
-    classifiedStatus.watResConfid);
+   console.log("ClassifiedAbility is " + classifiedStatus.classified );
+   console.log("Classified as " + classifiedStatus.watResClass );
+   console.log("Confidence is " + classifiedStatus.watResConfid);
 
  }
 
-
-trashTier();
+classifyCoke(dumpster);
+//trashTier(runner);
 
 //classifyCoke();
 
@@ -134,8 +145,6 @@ trashTier();
 // });
 
 // start server on the specified port and binding host
-<<<<<<< Updated upstream
-=======
 
 // app.get('/', function (req, res) {
 //
@@ -144,7 +153,7 @@ trashTier();
 //
 // // app.post('/')
 //
->>>>>>> Stashed changes
+
 // app.listen(appEnv.port, '0.0.0.0', function() {
 //   // print a message when the server starts listening
 //   console.log("server starting on " + appEnv.url);
