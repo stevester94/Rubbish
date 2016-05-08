@@ -47,25 +47,83 @@ function createCokeClassifier() {
   });
 }
 
+
+var classifiedStatus = {
+  classified: "unwritten",
+  watResClass: "unwritten",
+  watResConfid: -100.100
+};
+
 // createCokeClassifier();
 
 function classifyCoke() {
   var params = {
-  	images_file: fs.createReadStream('./test4.jpg'),
-  	//classifier_ids: fs.readFileSync('./classifierList.json')
-    classifier_ids:
+
+  	images_file: fs.createReadStream('./test3.jpg'),
+  	classifier_ids: fs.readFileSync('./classifierList.json')
+
   };
 
   visual_recognition.classify(params,
   	function(err, response) {
-     	 if (err)
+          if (err){
         		console.log(err);
-      	 else
-     		console.log(JSON.stringify(response, null, 2));
-  });
-}
+            classifiedStatus = {
+              classified: "No",
+              watResClass :  "Unavailable",
+              watResConfid : -30.333
+            };
 
-classifyCoke();
+          }
+          else{
+     		    //console.log(JSON.stringify(response, null, 2));
+            var watsonText = JSON.stringify(response, null, 2);
+            var watsonConfidence = (watsonText.images.scores.score).substring(0, 8);
+            classifiedStatus = {
+              classified: "Yes",
+              watResClass :  watsonText.images.scores.name,
+              watResConfid : parsefloat(watsonConfidence)
+            };
+          }
+
+
+
+
+  });
+
+}
+/*
+function testObject(){
+  var classifiedStatus = {
+    classified: "Yes",
+    watsonResponse: "YES YES YES"}
+    ;
+    return classifiedStatus;
+}
+*/
+ //createTrashTier();
+ function trashTier(){
+
+   var watsonResult = {
+     classifiedVal: "No Clue",
+     watsonResponseClass: "No Clue",
+     watsonResponseConfidence : -7.7
+
+   };
+   classifyCoke();
+   //watsonResult.classifiedVal = classified;
+
+   watsonSays = watsonResult.classifiedVal;
+   console.log(classifiedStatus.classified + '/n' +
+    classifiedStatus.watResClass + '/n' +
+    classifiedStatus.watResConfid);
+
+ }
+
+
+trashTier();
+
+//classifyCoke();
 
 // visual_recognition.classify(params,
 // 	function(err, response) {
@@ -76,6 +134,17 @@ classifyCoke();
 // });
 
 // start server on the specified port and binding host
+<<<<<<< Updated upstream
+=======
+
+// app.get('/', function (req, res) {
+//
+//     res.sendFile("index.html");
+// });
+//
+// // app.post('/')
+//
+>>>>>>> Stashed changes
 // app.listen(appEnv.port, '0.0.0.0', function() {
 //   // print a message when the server starts listening
 //   console.log("server starting on " + appEnv.url);
