@@ -20,7 +20,7 @@ var multer = require("multer");
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
     console.log(file);
-    callback(null, 'uploads');
+    callback(null, './uploads');
   },
   filename: function (req, file, callback) {
     callback(null, file.originalname);
@@ -92,16 +92,9 @@ app.get('/uploadTest', function (req, res) {
     res.sendFile(__dirname + "/public/uploadTest.html");
 });
 
-app.post('/api/upload',function(req,res){
-    upload(req,res,function(err) {
-        if(err) {
-            console.log(err);
-            return res.end("Error uploading file.");
-        }
-
-        console.log(req.body);
-        res.end("File is uploaded...");
-    });
+app.post('/api/upload', upload.array('files'), function (req, res, next) {
+    console.log(req.body);
+    res.end("File is uploaded...");
 });
 
 app.listen(80, function () {
