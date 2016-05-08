@@ -76,14 +76,12 @@ classifyCoke();
 
 // start server on the specified port and binding host
 
-app.get('/', function (req, res) {
-
-    res.sendFile("index.html");
+app.get('/uploadTest', function (req, res) {
+    res.sendFile("uploadTest.html");
 });
 
 // app.post('/')
 
-app.listen(appEnv.port, '0.0.0.0', function() {
-  // print a message when the server starts listening
-  console.log("server starting on " + appEnv.url);
+app.listen(80, function () {
+  console.log('Example app listening on port 80!');
 });
