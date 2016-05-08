@@ -65,7 +65,7 @@ function classifyCoke() {
   });
 }
 
-classifyCoke();
+//classifyCoke();
 
 // visual_recognition.classify(params,
 // 	function(err, response) {
