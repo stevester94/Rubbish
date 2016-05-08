@@ -82,6 +82,10 @@ app.get('/api', function(req, res) {
   res.send('hello world');
 });
 
+app.post('/api/upload', function(req, res) {
+  return "object uploaded";
+});
+
 
 
 
