@@ -43,11 +43,13 @@ var visual_recognition = watson.visual_recognition({
   version_date: '2015-12-02'
 });
 
-function createCokeClassifier() {
+// positivesName should always be positives.zip
+// negativesName should always be negatives.zip
+function createClassifier(classifierName, positivesName, negativesName) {
   var params = {
-  	name: 'coke',
-  	positive_examples: fs.createReadStream('./Coke.zip'),
-  	negative_examples: fs.createReadStream('./notCoke.zip')
+  	name: classifierName,
+  	positive_examples: fs.createReadStream('./uploads/' + positivesName),
+  	negative_examples: fs.createReadStream('./uploads/' + negativesName)
   };
 
   visual_recognition.createClassifier(params,
@@ -95,6 +97,9 @@ app.get('/uploadTest', function (req, res) {
 app.post('/api/upload', upload.array('files'), function (req, res, next) {
     console.log(req.body);
     res.end("File is uploaded...");
+
+    createClassifier(req.body, "positives.zip", "negatives.zip");
+
 });
 
 app.listen(80, function () {
