@@ -4,6 +4,9 @@
 // node.js starter application for Bluemix
 //------------------------------------------------------------------------------
 
+var username = 'f6271ebc-3008-4298-95d0-13b54412ab80'
+var fuckedUpUserName = '78da62a8-c1cb-48a6-8d5c-b6c80b2c9b3c-us-south'
+
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
 var express = require('express');
@@ -37,7 +40,7 @@ var watson = require('watson-developer-cloud');
 var fs = require('fs');
 
 var visual_recognition = watson.visual_recognition({
-  username: 'f6271ebc-3008-4298-95d0-13b54412ab80',
+  username: username,
   password: 'Fsjwwu5RPYMf',
   version: 'v2-beta',
   version_date: '2015-12-02'
@@ -99,8 +102,7 @@ app.get('/uploadTest', function (req, res) {
 app.post('/api/upload', upload.array('files'), function (req, res, next) {
     console.log(req.body);
     res.end("File is uploaded...");
-
-    createClassifier(req.body, "positives.zip", "negatives.zip");
+    createClassifier(req.body.classifierName, "positives.zip", "negatives.zip");
 
 });
 
@@ -119,15 +121,40 @@ app.get('/delete/:id', function (req, res) {
 });
 
 app.get('/list', function(req, res) {
-  visual_recognition.listClassifiers({},
+  visual_recognition.listClassifiers({verbose: true},
   	function(err, response) {
   	 if (err)
   		console.log(err);
-  	 else
-  		res.send(JSON.stringify(response, null, 2));
+  	 else {
+  		bigList = JSON.parse(JSON.stringify(response, null, 2));
+      bigList = bigList.classifiers;
+
+      for(c in bigList) {
+        current = bigList[c];
+        if(current.owner === fuckedUpUserName)
+          console.log(bigList[c]);
+      }
   	}
-  );
-})
+  });
+});
+
+function listOurs() {
+  visual_recognition.listClassifiers({verbose: true},
+  	function(err, response) {
+  	 if (err)
+  		console.log(err);
+  	 else {
+  		bigList = JSON.parse(JSON.stringify(response, null, 2));
+      bigList = bigList.classifiers;
+
+      for(c in bigList) {
+        current = bigList[c];
+        if(current.owner === fuckedUpUserName)
+          console.log(bigList[c]);
+      }
+  	}
+  });
+}
 
 app.listen(80, function () {
   console.log('Example app listening on port 80!');
