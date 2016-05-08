@@ -80,7 +80,9 @@ app.get('/uploadTest', function (req, res) {
     res.sendFile("uploadTest.html");
 });
 
-// app.post('/')
+app.post('/api/upload', function (req, res) {
+    res.send("File Received");
+});
 
 app.listen(80, function () {
   console.log('Example app listening on port 80!');
