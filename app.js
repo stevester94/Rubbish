@@ -67,16 +67,24 @@ function classifyCoke() {
 
 //classifyCoke();
 
-// visual_recognition.classify(params,
-// 	function(err, response) {
-//    	 if (err)
-//       		console.log(err);
-//     	 else
-//    		console.log(JSON.stringify(response, null, 2));
-// });
 
-// start server on the specified port and binding host
-// app.listen(appEnv.port, '0.0.0.0', function() {
-//   // print a message when the server starts listening
-//   console.log("server starting on " + appEnv.url);
-// });
+
+//start server on the specified port and binding host
+app.listen(appEnv.port, '0.0.0.0', function() {
+  // print a message when the server starts listening
+  console.log("server starting on " + appEnv.url);
+});
+
+
+
+
+// respond with "hello world" when a GET request is made to the homepage
+app.get('/info', function(req, res) {
+  res.send('hello world');
+});
+
+
+
+
+
+
