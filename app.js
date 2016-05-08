@@ -78,15 +78,17 @@ function classifyCoke() {
   });
 }
 
-//classifyCoke();
-
-// visual_recognition.classify(params,
-// 	function(err, response) {
-//    	 if (err)
-//       		console.log(err);
-//     	 else
-//    		console.log(JSON.stringify(response, null, 2));
-// });
+function deleteClassifier(classifierID) {
+  visual_recognition.deleteClassifier({
+  	classifier_id: classifierID },
+  	function(err, response) {
+  	 if (err)
+  		console.log(err);
+  	 else
+  		console.log(JSON.stringify(response, null, 2));
+  	}
+  );
+}
 
 // start server on the specified port and binding host
 
@@ -101,6 +103,31 @@ app.post('/api/upload', upload.array('files'), function (req, res, next) {
     createClassifier(req.body, "positives.zip", "negatives.zip");
 
 });
+
+app.get('/delete/:id', function (req, res) {
+  visual_recognition.deleteClassifier({
+  	classifier_id: req.params.id },
+  	function(err, response) {
+  	 if (err)
+  		console.log(err);
+  	 else {
+  		console.log(JSON.stringify(response, null, 2));
+      res.send(JSON.stringify(response, null, 2));
+      }
+  	}
+  );
+});
+
+app.get('/list', function(req, res) {
+  visual_recognition.listClassifiers({},
+  	function(err, response) {
+  	 if (err)
+  		console.log(err);
+  	 else
+  		res.send(JSON.stringify(response, null, 2));
+  	}
+  );
+})
 
 app.listen(80, function () {
   console.log('Example app listening on port 80!');
