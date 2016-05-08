@@ -52,8 +52,7 @@ function createCokeClassifier() {
 function classifyCoke() {
   var params = {
   	images_file: fs.createReadStream('./test4.jpg'),
-  	//classifier_ids: fs.readFileSync('./classifierList.json')
-    classifier_ids:
+  	classifier_ids: fs.readFileSync('./classifierList.json')
   };
 
   visual_recognition.classify(params,
@@ -79,7 +78,7 @@ app.listen(appEnv.port, '0.0.0.0', function() {
 
 
 // respond with "hello world" when a GET request is made to the homepage
-app.get('/info', function(req, res) {
+app.get('/api', function(req, res) {
   res.send('hello world');
 });
 
