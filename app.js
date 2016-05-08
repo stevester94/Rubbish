@@ -53,7 +53,6 @@ function classifyCoke() {
   var params = {
   	images_file: fs.createReadStream('./test4.jpg'),
   	classifier_ids: fs.readFileSync('./classifierList.json')
-    classifier_ids:
   };
 
   visual_recognition.classify(params,
