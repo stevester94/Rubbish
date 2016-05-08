@@ -67,16 +67,14 @@ function createClassifier(classifierName, positivesName, negativesName) {
 
 function lookUp(item) {
   switch (item) {
-  case "cans":
+  case "can":
     return "Aluminum Recycle";
   case "soylent":
     return "Plastic Recycle";
-  case "redbull":
-    return "Aluminum Recycle";
-  case "computer":
-    return "ewaste";
-  case "styrofoam":
-    return "landfill";
+  case "battery":
+    return "E-Waste";
+  case "bag":
+    return "Compost";
   }
 
   return "Not Found"
@@ -215,4 +213,4 @@ app.get("/count", function(req,res) {
 
 app.get("/newClassifier", function(req,res) {
   res.sendFile(__dirname + "/public/newClassifier.html");
-})
+});

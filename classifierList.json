@@ -1,20 +1,24 @@
 {
   "classifiers": [
-    { "name": "styrofoam",
-      "classifier_id": "styrofoam_428755310",
-      "created": "2016-05-08T14:10:57.000Z",
+    {
+      "name": "can",
+      "classifier_id": "can_401722800",
+      "created": "2016-05-08T17:26:39.000Z",
+      "owner": "78da62a8-c1cb-48a6-8d5c-b6c80b2c9b3c-us-south"
+    },
+    {
+      "name": "soylent",
+      "classifier_id": "soylent_1435446869",
+      "created": "2016-05-08T17:27:16.000Z",
+      "owner": "78da62a8-c1cb-48a6-8d5c-b6c80b2c9b3c-us-south"
+    },
+    { "name": "battery",
+      "classifier_id": "battery_1531179086",
+      "created": "2016-05-08T17:26:04.000Z",
       "owner": "78da62a8-c1cb-48a6-8d5c-b6c80b2c9b3c-us-south" },
-    { "name": "soylent",
-      "classifier_id": "soylent_2057502445",
-      "created": "2016-05-08T14:09:00.000Z",
-      "owner": "78da62a8-c1cb-48a6-8d5c-b6c80b2c9b3c-us-south" },
-      { "name": "cans",
-        "classifier_id": "cans_1537010562",
-        "created": "2016-05-08T14:33:24.000Z",
-        "owner": "78da62a8-c1cb-48a6-8d5c-b6c80b2c9b3c-us-south" },
-        { "name": "computer",
-        "classifier_id": "computer_1768678253",
-        "created": "2016-05-08T14:32:40.000Z",
-        "owner": "78da62a8-c1cb-48a6-8d5c-b6c80b2c9b3c-us-south" }
+    { "name": "bag",
+      "classifier_id": "bag_2102686213",
+      "created": "2016-05-08T17:25:09.000Z",
+      "owner": "78da62a8-c1cb-48a6-8d5c-b6c80b2c9b3c-us-south" }
 ]
 }
