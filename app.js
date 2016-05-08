@@ -76,6 +76,7 @@ function lookUp(item) {
 
 
 var done = false;
+
 function classifyImage(name, res, callback) {
   var params = {
   	images_file: fs.createReadStream('./uploads/' + name),
@@ -194,17 +195,6 @@ app.post('/api/photo', upload.array('files'), function(req,res){
       res.send(response);
     });
 
-  var toReturn = "hello";
-  visual_recognition.classify(params,
-  	function(err, response) {
-     	if (err)
-          console.log(err);
-      else
-     		  console.log(response);
-          var result = new Result(response);
-          toReturn = "it worked";
-          done = result;
-          callback(toReturn);
-  });
-  return toReturn;
+
+
 });
