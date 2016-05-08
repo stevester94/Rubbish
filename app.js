@@ -15,6 +15,18 @@ var cfenv = require('cfenv');
 // create a new express server
 var app = express();
 
+// for multipart uplaods
+var multer = require("multer");
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    console.log(file);
+    callback(null, 'uploads');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.originalname);
+  }
+});
+var upload = multer({ storage : storage});
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
 
@@ -64,7 +76,7 @@ function classifyCoke() {
   });
 }
 
-classifyCoke();
+//classifyCoke();
 
 // visual_recognition.classify(params,
 // 	function(err, response) {
@@ -77,11 +89,19 @@ classifyCoke();
 // start server on the specified port and binding host
 
 app.get('/uploadTest', function (req, res) {
-    res.sendFile("uploadTest.html");
+    res.sendFile(__dirname + "/public/uploadTest.html");
 });
 
-app.post('/api/upload', function (req, res) {
-    res.send("File Received");
+app.post('/api/upload',function(req,res){
+    upload(req,res,function(err) {
+        if(err) {
+            console.log(err);
+            return res.end("Error uploading file.");
+        }
+
+        console.log(req.body);
+        res.end("File is uploaded...");
+    });
 });
 
 app.listen(80, function () {
