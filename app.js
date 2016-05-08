@@ -77,7 +77,7 @@ function lookUp(item) {
 
 var done = false;
 
-function classifyImage(name) {
+function classifyImage(name, res, callback) {
   var params = {
   	images_file: fs.createReadStream('./uploads/' + name),
   	classifier_ids: fs.readFileSync('./classifierList.json')
@@ -93,14 +93,18 @@ function classifyImage(name) {
           var result = new Result(response);
           toReturn = "it worked";
           done = result;
+          callback(toReturn);
   });
-  return toReturn;
+
 }
 
 function Result(response) {
-  this.item = response.images[0].scores[0].name
-  this.score = response.images[0].scores[0].score
-  this.class = lookUp(response.images[0].scores[0].name)
+  if response.image[0].scores != undefined {
+    this.item = response.images[0].scores[0].name
+    this.score = response.images[0].scores[0].score
+    this.class = lookUp(response.images[0].scores[0].name)
+  }
+
 }
 
 function deleteClassifier(classifierID) {
@@ -183,11 +187,12 @@ app.listen(80, function () {
 
 app.post('/api/photo', upload.array('files'), function(req,res){
 
-    res.end("File is uploaded");
+    // res.end("File is uploaded");
     console.log(req.files[0]);
-    var result = classifyImage(req.files[0].originalname, res);
+    var result = classifyImage(req.files[0].originalname, res, function(response) {
+      res.send("it worked");
+    });
 
 
-    console.log(done);
 
 });
