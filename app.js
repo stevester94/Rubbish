@@ -6,6 +6,7 @@
 
 var username = 'f6271ebc-3008-4298-95d0-13b54412ab80'
 var fuckedUpUserName = '78da62a8-c1cb-48a6-8d5c-b6c80b2c9b3c-us-south'
+var count = 0;
 
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
@@ -66,9 +67,16 @@ function createClassifier(classifierName, positivesName, negativesName) {
 
 function lookUp(item) {
   switch (item) {
-  case "coke":
-    return "Recycle";
-
+  case "cans":
+    return "Aluminum Recycle";
+  case "soylent":
+    return "Plastic Recycle";
+  case "redbull":
+    return "Aluminum Recycle";
+  case "computer":
+    return "ewaste";
+  case "styrofoam":
+    return "landfill";
   }
 
   return "Not Found"
@@ -102,9 +110,13 @@ function classifyImage(name, res, callback) {
 
 function Result(response) {
   if(response.images[0].scores != undefined) {
-    this.item = response.images[0].scores[0].name
-    this.score = response.images[0].scores[0].score
-    this.class = lookUp(response.images[0].scores[0].name)
+    this.item = response.images[0].scores[0].name;
+    this.score = response.images[0].scores[0].score;
+    this.class = lookUp(response.images[0].scores[0].name);
+  } else {
+    this.item = "Not found";
+    this.score = "Not found";
+    this.class = "Not sure";
   }
 
 }
@@ -150,6 +162,7 @@ app.get('/delete/:id', function (req, res) {
 app.get('/list', function(req, res) {
   visual_recognition.listClassifiers({verbose: true},
   	function(err, response) {
+      console.log("listing");
   	 if (err)
   		console.log(err);
   	 else {
@@ -188,13 +201,18 @@ app.listen(80, function () {
 });
 
 app.post('/api/photo', upload.array('files'), function(req,res){
-
+    count = count + 1;
     // res.end("File is uploaded");
     console.log(req.files[0]);
     var result = classifyImage(req.files[0].originalname, res, function(response) {
       res.send(response);
     });
-
-
-
 });
+
+app.get("/count", function(req,res) {
+  res.send(count.toString());
+});
+
+app.get("/newClassifier", function(req,res) {
+  res.sendFile(__dirname + "/public/newClassifier.html");
+})
