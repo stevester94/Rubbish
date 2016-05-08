@@ -8,9 +8,16 @@
   "dependencies": {
     "cfenv": "1.0.x",
     "express": "4.13.x",
+<<<<<<< HEAD
     "multer": "^1.1.0",
     "stream-buffers": "^3.0.0",
     "watson-developer-cloud": "^1.4.1"
+=======
+    "watson-developer-cloud": "^1.4.1",
+    "body-parser": "^1.14.2",
+    "express": "4.13.3",
+    "multer": "1.1.0"
+>>>>>>> thecope
   },
   "repository": {},
   "engines": {

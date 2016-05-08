@@ -64,21 +64,43 @@ function createClassifier(classifierName, positivesName, negativesName) {
   });
 }
 
-// createCokeClassifier();
+function lookUp(item) {
+  switch (item) {
+  case "coke":
+    return "Recycle";
 
-function classifyCoke() {
+  }
+
+  return "Not Found"
+}
+
+
+var done = false;
+
+function classifyImage(name) {
   var params = {
-  	images_file: fs.createReadStream('./test4.jpg'),
+  	images_file: fs.createReadStream('./uploads/' + name),
   	classifier_ids: fs.readFileSync('./classifierList.json')
   };
 
+  var toReturn = "hello";
   visual_recognition.classify(params,
   	function(err, response) {
-     	 if (err)
-        		console.log(err);
-      	 else
-     		console.log(JSON.stringify(response, null, 2));
+     	if (err)
+          console.log(err);
+      else
+     		  console.log(response);
+          var result = new Result(response);
+          toReturn = "it worked";
+          done = result;
   });
+  return toReturn;
+}
+
+function Result(response) {
+  this.item = response.images[0].scores[0].name
+  this.score = response.images[0].scores[0].score
+  this.class = lookUp(response.images[0].scores[0].name)
 }
 
 function deleteClassifier(classifierID) {
@@ -93,11 +115,10 @@ function deleteClassifier(classifierID) {
   );
 }
 
-// start server on the specified port and binding host
-
 app.get('/uploadTest', function (req, res) {
     res.sendFile(__dirname + "/public/uploadTest.html");
 });
+
 
 app.post('/api/upload', upload.array('files'), function (req, res, next) {
     console.log(req.body);
@@ -158,4 +179,15 @@ function listOurs() {
 
 app.listen(80, function () {
   console.log('Example app listening on port 80!');
+});
+
+app.post('/api/photo', upload.array('files'), function(req,res){
+
+    res.end("File is uploaded");
+    console.log(req.files[0]);
+    var result = classifyImage(req.files[0].originalname, res);
+
+
+    console.log(done);
+
 });
