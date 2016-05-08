@@ -77,25 +77,7 @@ function lookUp(item) {
 
 var done = false;
 
-function classifyImage(name) {
-  var params = {
-  	images_file: fs.createReadStream('./uploads/' + name),
-  	classifier_ids: fs.readFileSync('./classifierList.json')
-  };
 
-  var toReturn = "hello";
-  visual_recognition.classify(params,
-  	function(err, response) {
-     	if (err)
-          console.log(err);
-      else
-     		  console.log(response);
-          var result = new Result(response);
-          toReturn = "it worked";
-          done = result;
-  });
-  return toReturn;
-}
 
 function Result(response) {
   this.item = response.images[0].scores[0].name
@@ -182,12 +164,29 @@ app.listen(80, function () {
 });
 
 app.post('/api/photo', upload.array('files'), function(req,res){
-
-    res.end("File is uploaded");
     console.log(req.files[0]);
-    var result = classifyImage(req.files[0].originalname, res);
-
-
-    console.log(done);
-
+    var result = classifyImage(req.files[0].originalname, res, function (response) {
+          res.send(response);
+    });
 });
+
+function classifyImage(name, callback) {
+  var params = {
+  	images_file: fs.createReadStream('./uploads/' + name),
+  	classifier_ids: fs.readFileSync('./classifierList.json')
+  };
+
+  var toReturn = "hello";
+  visual_recognition.classify(params,
+  	function(err, response) {
+     	if (err)
+          console.log(err);
+      else
+     		  console.log(response);
+          var result = new Result(response);
+          toReturn = "it worked";
+          done = result;
+          callback(toReturn);
+  });
+  return toReturn;
+}
