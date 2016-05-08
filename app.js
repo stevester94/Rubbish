@@ -88,18 +88,20 @@ function classifyImage(name, res, callback) {
   	function(err, response) {
      	if (err)
           console.log(err);
-      else
-     		  console.log(response);
-          var result = new Result(response);
-          toReturn = "it worked";
-          done = result;
-          callback(toReturn);
+      else {
+        console.log(response);
+        var result = new Result(response);
+        toReturn = "it worked";
+        done = result;
+      }
+
+        callback(result);
   });
 
 }
 
 function Result(response) {
-  if response.image[0].scores != undefined {
+  if(response.images[0].scores != undefined) {
     this.item = response.images[0].scores[0].name
     this.score = response.images[0].scores[0].score
     this.class = lookUp(response.images[0].scores[0].name)
@@ -190,7 +192,7 @@ app.post('/api/photo', upload.array('files'), function(req,res){
     // res.end("File is uploaded");
     console.log(req.files[0]);
     var result = classifyImage(req.files[0].originalname, res, function(response) {
-      res.send("it worked");
+      res.send(response);
     });
 
 
