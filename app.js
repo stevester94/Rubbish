@@ -52,7 +52,7 @@ function createCokeClassifier() {
 function classifyCoke() {
   var params = {
   	images_file: fs.createReadStream('./test4.jpg'),
-  	//classifier_ids: fs.readFileSync('./classifierList.json')
+  	classifier_ids: fs.readFileSync('./classifierList.json')
     classifier_ids:
   };
 
@@ -76,7 +76,15 @@ classifyCoke();
 // });
 
 // start server on the specified port and binding host
-// app.listen(appEnv.port, '0.0.0.0', function() {
-//   // print a message when the server starts listening
-//   console.log("server starting on " + appEnv.url);
-// });
+
+app.get('/', function (req, res) {
+
+    res.sendFile("index.html");
+});
+
+// app.post('/')
+
+app.listen(appEnv.port, '0.0.0.0', function() {
+  // print a message when the server starts listening
+  console.log("server starting on " + appEnv.url);
+});
